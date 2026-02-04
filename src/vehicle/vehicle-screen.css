@@ -1,0 +1,786 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.vehicle-screen {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Navigation */
+.vehicle-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.car-icon {
+  width: 40px;
+  height: 40px;
+  color: #000;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
+
+.nav-center {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.help-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #6C5CE7;
+  padding: 12px 20px;
+  border-radius: 50px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFA500;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #FF8C00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.logout-icon {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.phone-icon {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+.help-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.help-label {
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.phone-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Content Wrapper */
+.vehicle-content-wrapper {
+  padding: 60px 60px 80px;
+  background-color: #FAFAFA;
+}
+
+.vehicle-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Page Title */
+.vehicle-page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Category Pills */
+.category-pills {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.category-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #fff;
+  border: 1px solid #E0E0E0;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.category-pill:hover {
+  background-color: #6C5CE7;
+  color: #fff;
+  border-color: #6C5CE7;
+}
+
+.category-pill.active {
+  background-color: #6C5CE7;
+  color: #fff;
+  border-color: #6C5CE7;
+}
+
+.category-icon {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+/* Vehicle Grid */
+.vehicles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.no-cars-message {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+  background-color: #f9fafb;
+  border-radius: 16px;
+  border: 2px dashed #d1d5db;
+  margin: 40px 0;
+}
+
+.no-cars-icon {
+  width: 80px;
+  height: 80px;
+  color: #9ca3af;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-cars-message h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+.no-cars-message p {
+  font-size: 16px;
+  color: #6b7280;
+  max-width: 500px;
+}
+
+.vehicle-card-new {
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.vehicle-card-new:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.vehicle-image-new {
+  background-color: #F5F5F5;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.vehicle-card-new:hover .car-image {
+  transform: scale(1.1);
+}
+
+.car-silhouette-new {
+  width: 70%;
+  height: 55%;
+  background-color: #C8C8C8;
+  border-radius: 40% 40% 15% 15%;
+  position: relative;
+}
+
+.car-silhouette-new::before {
+  content: '';
+  position: absolute;
+  bottom: 12%;
+  left: 18%;
+  width: 16%;
+  height: 22%;
+  background-color: #B5B5B5;
+  border-radius: 50%;
+}
+
+.car-silhouette-new::after {
+  content: '';
+  position: absolute;
+  bottom: 12%;
+  right: 18%;
+  width: 16%;
+  height: 22%;
+  background-color: #B5B5B5;
+  border-radius: 50%;
+}
+
+.vehicle-info-new {
+  padding: 20px;
+}
+
+.vehicle-header-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.vehicle-name-type {
+  flex: 1;
+}
+
+.vehicle-name-new {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 4px 0;
+}
+
+.vehicle-type-new {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.vehicle-price-new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.price-amount-new {
+  font-size: 22px;
+  font-weight: 700;
+  color: #6C5CE7;
+}
+
+.price-period-new {
+  font-size: 12px;
+  color: #999;
+}
+
+.vehicle-features-new {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.feature-item-new {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.feature-item-new svg {
+  width: 16px;
+  height: 16px;
+  color: #666;
+}
+
+.view-details-btn-new {
+  width: 100%;
+  padding: 14px;
+  background-color: #6C5CE7;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.view-details-btn-new:hover {
+  background-color: #5B4BC9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
+}
+
+/* Brand Logos Section */
+.brand-logos-section {
+  background-color: #fff;
+  padding: 50px 60px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.brand-logos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.brand-logo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.brand-logo:hover {
+  opacity: 1;
+}
+
+.brand-logo svg {
+  height: 30px;
+  width: auto;
+}
+
+/* Footer */
+.vehicle-footer {
+  background-color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+}
+
+.footer-top {
+  padding: 60px 60px 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-car-icon {
+  width: 36px;
+  height: 36px;
+  color: #6C5CE7;
+}
+
+.footer-logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+  max-width: 350px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.social-icon:hover {
+  background-color: #6C5CE7;
+  transform: translateY(-3px);
+}
+
+.social-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-info-circles {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.info-circle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.circle-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.circle-icon.orange {
+  background-color: #FFA500;
+  color: #fff;
+}
+
+.circle-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.circle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.circle-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.circle-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.footer-bottom {
+  padding: 50px 60px;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.footer-column-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 20px 0;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #6C5CE7;
+}
+
+.app-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.app-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.app-button svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.app-button-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.app-button-small {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.app-button-large {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.footer-copyright {
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  padding-top: 30px;
+  border-top: 1px solid #E8E8E8;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .vehicle-container {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .vehicle-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .vehicle-navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 15px;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .vehicle-hero {
+    padding: 40px 20px;
+  }
+
+  .vehicle-hero-title {
+    font-size: 32px;
+  }
+
+  .vehicle-content-wrapper {
+    padding: 20px;
+  }
+
+  .vehicle-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .vehicles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .brand-logos-container {
+    gap: 30px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vehicle-navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 15px;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .vehicle-content-wrapper {
+    padding: 30px 20px;
+  }
+
+  .vehicle-page-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .category-pills {
+    gap: 8px;
+    margin-bottom: 35px;
+  }
+
+  .category-pill {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .vehicles-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .brand-logos-section {
+    padding: 30px 20px;
+  }
+
+  .brand-logos-container {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .brand-logo {
+    flex: 0 0 calc(33.333% - 15px);
+  }
+
+  .footer-top {
+    padding: 40px 20px 30px;
+  }
+
+  .footer-bottom {
+    padding: 30px 20px;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-info-circles {
+    gap: 20px;
+  }
+}
