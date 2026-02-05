@@ -10,9 +10,20 @@ import Signup from './Signup';
 import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
+export interface Vehicle {
+  id: number;
+  name: string;
+  type: string;
+  price: number;
+  image: string;
+  features: string[];
+  seats: number;
+}
+
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
@@ -22,6 +33,11 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setCurrentPage('login');
+  };
+
+  const handleViewDetails = (vehicle: Vehicle) => {
+    setSelectedVehicle(vehicle);
+    setCurrentPage('details');
   };
 
   return (
@@ -43,9 +59,9 @@ function App() {
       {currentPage === 'signup' && (
         <Signup onSwitchToLogin={() => setCurrentPage('login')} />
       )}
-      {currentPage === 'home' && <Home onNavigate={setCurrentPage} />}
-      {currentPage === 'vehicles' && <VehicleScreen onNavigate={setCurrentPage} />}
-      {currentPage === 'details' && <VehicleDetails onNavigate={setCurrentPage} />}
+      {currentPage === 'home' && <Home onNavigate={setCurrentPage} onViewDetails={handleViewDetails} />}
+      {currentPage === 'vehicles' && <VehicleScreen onNavigate={setCurrentPage} onViewDetails={handleViewDetails} />}
+      {currentPage === 'details' && <VehicleDetails onNavigate={setCurrentPage} vehicle={selectedVehicle} onViewDetails={handleViewDetails} />}
       {currentPage === 'about' && <About onNavigate={setCurrentPage} />}
       {currentPage === 'contact' && <Contact onNavigate={setCurrentPage} />}
       <ScrollToTop />

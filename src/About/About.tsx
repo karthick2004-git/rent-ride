@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './About.css';
-import carsImage from '../assets/inovaCar.avif';
+import roadCarImage from '../assets/road-car.avif';
 
 interface AboutProps {
   onNavigate: (page: string) => void;
@@ -187,7 +187,9 @@ const About = ({ onNavigate }: AboutProps) => {
           </div>
 
           <div className="memories-right">
-            <div className="memories-image"></div>
+            <div className="memories-image">
+              <img src={roadCarImage} alt="Luxury car on the road" className="road-car-image" />
+            </div>
           </div>
         </div>
       </section>
@@ -370,7 +372,7 @@ const About = ({ onNavigate }: AboutProps) => {
             <button className="cta-button">Book now</button>
           </div>
           <div className="cta-image">
-            <img src={carsImage} alt="Car" className="cta-car-img" />
+            <img src={roadCarImage} alt="Car" className="cta-car-img" />
           </div>
         </div>
       </section>

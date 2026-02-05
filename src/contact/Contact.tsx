@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import './Contact.css';
+import contactImage from '../assets/contact.webp';
+import poster1 from '../assets/poster1.jpg';
+import poster2 from '../assets/poster2.jpg';
+import poster3 from '../assets/poster3.jpg';
 
 interface ContactProps {
   onNavigate: (page: string) => void;
@@ -54,14 +58,16 @@ const Contact = ({ onNavigate }: ContactProps) => {
             <h2 className="booking-form-title">Book your car</h2>
             <form className="booking-form">
               <div className="form-field">
-                <select className="form-input">
-                  <option>Car type</option>
-                  <option>Sedan</option>
-                  <option>SUV</option>
-                  <option>Sport</option>
-                </select>
+                <input type="text" className="form-input" placeholder="Your name" />
                 <svg className="form-icon" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+              </div>
+
+              <div className="form-field">
+                <input type="tel" className="form-input" placeholder="Phone number" />
+                <svg className="form-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
                 </svg>
               </div>
 
@@ -90,25 +96,25 @@ const Contact = ({ onNavigate }: ContactProps) => {
               </div>
 
               <div className="form-field">
-                <input type="text" className="form-input" placeholder="Rental date" />
+                <input type="date" className="form-input" placeholder="Rental date" />
                 <svg className="form-icon" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
                 </svg>
               </div>
 
               <div className="form-field">
-                <input type="text" className="form-input" placeholder="Return date" />
+                <input type="date" className="form-input" placeholder="Return date" />
                 <svg className="form-icon" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
                 </svg>
               </div>
 
-              <button type="submit" className="booking-submit-btn">Book now</button>
+              <button type="submit" className="booking-submit-btn">Contact us</button>
             </form>
           </div>
 
-          <div className="booking-map">
-            <div className="map-placeholder"></div>
+          <div className="booking-map fade-in-right">
+            <img src={contactImage} alt="Contact" className="contact-image" />
           </div>
         </div>
       </section>
@@ -173,7 +179,9 @@ const Contact = ({ onNavigate }: ContactProps) => {
 
           <div className="blog-grid">
             <div className="blog-card">
-              <div className="blog-image"></div>
+              <div className="blog-image">
+                <img src={poster1} alt="How To Choose The Right Car" />
+              </div>
               <div className="blog-content">
                 <h3 className="blog-post-title">How To Choose The Right Car</h3>
                 <div className="blog-meta">
@@ -184,7 +192,9 @@ const Contact = ({ onNavigate }: ContactProps) => {
             </div>
 
             <div className="blog-card">
-              <div className="blog-image"></div>
+              <div className="blog-image">
+                <img src={poster2} alt="Which plan is right for me?" />
+              </div>
               <div className="blog-content">
                 <h3 className="blog-post-title">Which plan is right for me?</h3>
                 <div className="blog-meta">
@@ -195,7 +205,9 @@ const Contact = ({ onNavigate }: ContactProps) => {
             </div>
 
             <div className="blog-card">
-              <div className="blog-image"></div>
+              <div className="blog-image">
+                <img src={poster3} alt="Enjoy Speed, Choice & Total Control" />
+              </div>
               <div className="blog-content">
                 <h3 className="blog-post-title">Enjoy Speed, Choice & Total Control</h3>
                 <div className="blog-meta">

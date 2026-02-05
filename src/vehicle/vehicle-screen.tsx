@@ -3,12 +3,14 @@ import './vehicle-screen.css';
 import car22 from '../assets/car22.avif';
 import honda from '../assets/honda.avif';
 import inovaCar from '../assets/inovaCar.avif';
+import type { Vehicle } from '../App';
 
 interface VehicleScreenProps {
   onNavigate: (page: string) => void;
+  onViewDetails: (vehicle: Vehicle) => void;
 }
 
-const VehicleScreen = ({ onNavigate }: VehicleScreenProps) => {
+const VehicleScreen = ({ onNavigate, onViewDetails }: VehicleScreenProps) => {
   const [selectedCategory, setSelectedCategory] = useState('All vehicles');
 
   // Scroll animation setup
@@ -119,7 +121,7 @@ const VehicleScreen = ({ onNavigate }: VehicleScreenProps) => {
                         <span>Air Conditioner</span>
                       </div>
                     </div>
-                    <button className="view-details-btn-new" onClick={() => onNavigate('details')}>View Details</button>
+                    <button className="view-details-btn-new" onClick={() => onViewDetails(vehicle)}>View Details</button>
                   </div>
                 </div>
               ))

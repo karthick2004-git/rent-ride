@@ -2,13 +2,16 @@ import './Home.css';
 import car22 from './assets/car22.avif';
 import honda from './assets/honda.avif';
 import inovaCar from './assets/inovaCar.avif';
+import audi from './assets/audi.webp';
 import { useState, useEffect } from 'react';
+import type { Vehicle } from './App';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  onViewDetails: (vehicle: Vehicle) => void;
 }
 
-const Home = ({ onNavigate }: HomeProps) => {
+const Home = ({ onNavigate, onViewDetails }: HomeProps) => {
   const [carType, setCarType] = useState('');
   const [rentalPlace, setRentalPlace] = useState('');
   const [returnPlace, setReturnPlace] = useState('');
@@ -21,6 +24,16 @@ const Home = ({ onNavigate }: HomeProps) => {
     rentalDate: false,
     returnDate: false
   });
+
+  // Home page vehicles
+  const vehicles: Vehicle[] = [
+    { id: 1, name: 'Mercedes', type: 'Sedan', price: 25, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+    { id: 2, name: 'Mercedes', type: 'Sport', price: 50, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+    { id: 3, name: 'Mercedes', type: 'Sedan', price: 45, image: inovaCar, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+    { id: 4, name: 'Porsche', type: 'SUV', price: 40, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
+    { id: 5, name: 'Toyota', type: 'Sedan', price: 35, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
+    { id: 6, name: 'Porsche', type: 'SUV', price: 50, image: inovaCar, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
+  ];
 
   // Scroll animation setup
   useEffect(() => {
@@ -229,7 +242,7 @@ const Home = ({ onNavigate }: HomeProps) => {
       <section className="steps-section">
         <div className="steps-container">
           <div className="steps-image fade-in-left">
-            <div className="blurred-image"></div>
+            <img src={audi} alt="Audi Car" className="steps-car-image" />
           </div>
 
           <div className="steps-content fade-in-right">
@@ -327,7 +340,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[0])}>View Details</button>
             </div>
           </div>
 
@@ -369,7 +382,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[1])}>View Details</button>
             </div>
           </div>
 
@@ -411,7 +424,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[2])}>View Details</button>
             </div>
           </div>
 
@@ -453,7 +466,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[3])}>View Details</button>
             </div>
           </div>
 
@@ -495,7 +508,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[4])}>View Details</button>
             </div>
           </div>
 
@@ -537,7 +550,7 @@ const Home = ({ onNavigate }: HomeProps) => {
                   </div>
                 </div>
               </div>
-              <button className="view-details-btn">View Details</button>
+              <button className="view-details-btn" onClick={() => onViewDetails(vehicles[5])}>View Details</button>
             </div>
           </div>
         </div>

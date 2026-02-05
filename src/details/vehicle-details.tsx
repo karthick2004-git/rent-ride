@@ -3,14 +3,33 @@ import './vehicle-details.css';
 import car22 from '../assets/car22.avif';
 import honda from '../assets/honda.avif';
 import inovaCar from '../assets/inovaCar.avif';
+import type { Vehicle } from '../App';
 
 interface VehicleDetailsProps {
   onNavigate: (page: string) => void;
+  vehicle: Vehicle | null;
+  onViewDetails: (vehicle: Vehicle) => void;
 }
 
-const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
+const VehicleDetails = ({ onNavigate, vehicle, onViewDetails }: VehicleDetailsProps) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  // Default vehicle if none is selected
+  const displayVehicle = vehicle || {
+    id: 1,
+    name: 'BMW',
+    type: 'Sedan',
+    price: 25,
+    image: car22,
+    features: ['Automat', 'PB 95', 'Air Conditioner'],
+    seats: 5
+  };
+
+  // Scroll to top when component mounts or vehicle changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [vehicle]);
 
   // Scroll animation setup
   useEffect(() => {
@@ -57,15 +76,15 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
           {/* Left Side - Vehicle Images */}
           <div className="vehicle-images-section fade-in-left">
             <div className="vehicle-header-info">
-              <h1 className="vehicle-title">BMW</h1>
+              <h1 className="vehicle-title">{displayVehicle.name}</h1>
               <div className="vehicle-price-tag">
-                <span className="price-value">$25</span>
+                <span className="price-value">${displayVehicle.price}</span>
                 <span className="price-unit">/ day</span>
               </div>
             </div>
 
             <div className="main-image-container">
-              <img src={car22} alt="BMW" className="car-image-large" />
+              <img src={displayVehicle.image} alt={displayVehicle.name} className="car-image-large" />
             </div>
 
             <div className="thumbnail-images">
@@ -94,7 +113,7 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
                 </div>
                 <div className="spec-info">
                   <div className="spec-label">Gear Box</div>
-                  <div className="spec-value">Automatic</div>
+                  <div className="spec-value">{displayVehicle.features[0] || 'Automatic'}</div>
                 </div>
               </div>
 
@@ -106,7 +125,7 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
                 </div>
                 <div className="spec-info">
                   <div className="spec-label">Fuel</div>
-                  <div className="spec-value">Petrol</div>
+                  <div className="spec-value">{displayVehicle.features[1] || 'Petrol'}</div>
                 </div>
               </div>
 
@@ -130,7 +149,7 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
                 </div>
                 <div className="spec-info">
                   <div className="spec-label">Air Conditioner</div>
-                  <div className="spec-value">Yes</div>
+                  <div className="spec-value">{displayVehicle.features[2] || 'Yes'}</div>
                 </div>
               </div>
 
@@ -142,7 +161,7 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
                 </div>
                 <div className="spec-info">
                   <div className="spec-label">Seats</div>
-                  <div className="spec-value">5</div>
+                  <div className="spec-value">{displayVehicle.seats}</div>
                 </div>
               </div>
 
@@ -241,12 +260,12 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
 
           <div className="other-cars-grid">
             {[
-              { name: 'Mercedes', type: 'Sedan', price: 25, image: car22 },
-              { name: 'Mercedes', type: 'Sedan', price: 50, image: honda },
-              { name: 'Mercedes', type: 'Sedan', price: 45, image: inovaCar },
-              { name: 'Porsche', type: 'SUV', price: 40, image: car22 },
-              { name: 'Toyota', type: 'Sedan', price: 35, image: honda },
-              { name: 'Porsche', type: 'SUV', price: 50, image: inovaCar },
+              { id: 10, name: 'Mercedes', type: 'Sedan', price: 25, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+              { id: 11, name: 'Mercedes', type: 'Sedan', price: 50, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+              { id: 12, name: 'Mercedes', type: 'Sedan', price: 45, image: inovaCar, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+              { id: 13, name: 'Porsche', type: 'SUV', price: 40, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
+              { id: 14, name: 'Toyota', type: 'Sedan', price: 35, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
+              { id: 15, name: 'Porsche', type: 'SUV', price: 50, image: inovaCar, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
             ].map((car, index) => (
               <div key={index} className="other-car-card">
                 <div className="other-car-image">
@@ -283,7 +302,7 @@ const VehicleDetails = ({ onNavigate }: VehicleDetailsProps) => {
                       <span>Air Conditioner</span>
                     </div>
                   </div>
-                  <button className="other-car-btn" onClick={() => onNavigate('details')}>View Details</button>
+                  <button className="other-car-btn" onClick={() => onViewDetails(car)}>View Details</button>
                 </div>
               </div>
             ))}
