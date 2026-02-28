@@ -1,249 +1,654 @@
+/* =============================================
+   SIGNUP PAGE — Professional Design System
+   ============================================= */
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .signup-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #6C5CE7;
 }
 
-/* Right Side - Form (First in DOM for signup) */
-.signup-right {
+/* ========================
+   LEFT PANEL — Brand Side
+   ======================== */
+.signup-left {
+  flex: 1;
+  background: linear-gradient(135deg, #6C5CE7 0%, #7C6FF0 30%, #5B4BC9 70%, #4834B0 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px;
-  background: transparent;
+  justify-content: flex-start;
+  padding: 0;
   position: relative;
-  z-index: 2;
+  overflow: hidden;
 }
 
-/* Left Side - Hero Image */
-.signup-left {
-  display: none;
+/* --- Floating Orbs --- */
+.signup-left::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  animation: s-float 8s ease-in-out infinite;
+}
+.signup-left::after {
+  content: "";
+  position: absolute;
+  bottom: -120px;
+  left: -100px;
+  width: 450px;
+  height: 450px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+  animation: s-float 10s ease-in-out infinite reverse;
 }
 
-.overlay {
+/* --- Brand Content Wrapper --- */
+.signup-left .brand-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+}
+
+/* Animated Title */
+.signup-left .anim-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 14px;
+  font-size: 52px;
+  font-weight: 800;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 1px;
+  user-select: none;
+}
+
+.signup-left .anim-title span {
+  display: inline-block;
+  opacity: 0;
+  animation: titleDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+.signup-left .anim-title .anim-title-space {
+  width: 16px;
+}
+
+.signup-left .anim-title span:nth-child(1)  { animation-delay: 0.08s; }
+.signup-left .anim-title span:nth-child(2)  { animation-delay: 0.14s; }
+.signup-left .anim-title span:nth-child(3)  { animation-delay: 0.20s; }
+.signup-left .anim-title span:nth-child(4)  { animation-delay: 0.26s; }
+.signup-left .anim-title span:nth-child(5)  { animation-delay: 0.32s; }
+.signup-left .anim-title span:nth-child(6)  { animation-delay: 0.38s; }
+.signup-left .anim-title span:nth-child(7)  { animation-delay: 0.44s; }
+.signup-left .anim-title span:nth-child(8)  { animation-delay: 0.50s; }
+.signup-left .anim-title span:nth-child(9)  { animation-delay: 0.56s; }
+
+@keyframes titleDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Tagline */
+.signup-left .brand-tagline {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: 0;
+  letter-spacing: 0.2px;
+  opacity: 0;
+  animation: s-fadeUp 0.7s 0.7s ease forwards;
+}
+
+/* --- Scene Container (full-screen behind content) --- */
+.signup-left .scene {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   z-index: 1;
 }
 
-.left-content {
-  position: relative;
-  z-index: 2;
-  color: white;
-  max-width: 500px;
+/* --- Clouds --- */
+.signup-left .cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  height: 16px;
+  z-index: 1;
+  animation: s-cloud 28s linear infinite;
+}
+.signup-left .cloud { width: 90px; top: 15%; }
+.signup-left .cloud-2 { width: 65px; top: 28%; animation-duration: 22s; animation-delay: -6s; }
+.signup-left .cloud-3 { width: 110px; top: 10%; animation-duration: 35s; animation-delay: -14s; }
+
+.signup-left .cloud::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 18px;
+  width: 22px;
+  height: 22px;
+  background: inherit;
+  border-radius: 50%;
+}
+.signup-left .cloud::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  background: inherit;
+  border-radius: 50%;
+}
+
+/* --- Mountains --- */
+.signup-left .scene-mtn {
+  position: absolute;
+  bottom: 200px;
+  right: -400px;
+  z-index: 1;
+  animation: s-mtn 50s linear infinite;
+}
+.signup-left .scene-mtn::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-bottom: 180px solid rgba(255, 255, 255, 0.05);
+}
+.signup-left .scene-mtn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: -300px;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 140px solid rgba(255, 255, 255, 0.035);
+}
+
+/* --- Hills --- */
+.signup-left .scene-hill {
+  position: absolute;
+  bottom: 160px;
+  right: -400px;
+  width: 450px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50% 50% 0 0;
+  z-index: 1;
+  animation: s-hill 28s 1s linear infinite;
+}
+.signup-left .scene-hill::before {
+  content: "";
+  position: absolute;
+  right: -320px;
+  bottom: 0;
+  width: 350px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50% 50% 0 0;
+}
+
+/* --- Pine Trees --- */
+.signup-left .pine {
+  position: absolute;
+  bottom: 160px;
+  z-index: 3;
+  animation: s-pine 9s linear infinite;
+}
+.signup-left .pine::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 80px solid rgba(255, 255, 255, 0.1);
+}
+.signup-left .pine::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0 auto;
+}
+.signup-left .pine-2 {
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+.signup-left .pine-2::before {
+  border-left-width: 14px;
+  border-right-width: 14px;
+  border-bottom-width: 60px;
+}
+.signup-left .pine-3 {
+  animation-duration: 17s;
+  animation-delay: -9s;
+}
+.signup-left .pine-3::before {
+  border-left-width: 24px;
+  border-right-width: 24px;
+  border-bottom-width: 100px;
+}
+
+/* --- Road --- */
+.signup-left .road-surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
+  height: 160px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+  z-index: 2;
+}
+.signup-left .road-surface::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
-.brand-logo {
-  font-size: 32px;
-  font-weight: 700;
-  font-style: italic;
-  margin-bottom: 120px;
-  color: white;
+/* --- Road Dashed Lines --- */
+.signup-left .road-lines {
+  position: absolute;
+  bottom: 78px;
+  left: 0;
+  width: 200%;
+  height: 2px;
+  z-index: 4;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.15) 0px,
+    rgba(255, 255, 255, 0.15) 30px,
+    transparent 30px,
+    transparent 60px
+  );
+  animation: s-road 1.2s linear infinite;
 }
 
-.hero-content {
-  margin-bottom: 200px;
+/* === SEDAN CAR === */
+.signup-left .sedan {
+  position: absolute;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 84px;
+  z-index: 6;
+  animation: s-bounce 0.6s ease-in-out infinite alternate;
 }
 
-.hero-title {
-  font-size: 48px;
-  font-weight: 700;
-  margin: 0 0 20px 0;
-  color: white;
-  line-height: 1.2;
+.signup-left .sedan-body {
+  position: absolute;
+  bottom: 16px;
+  left: 6px;
+  width: 168px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px 16px 5px 5px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
-.hero-subtitle {
-  font-size: 18px;
-  line-height: 1.6;
-  color: white;
-  margin: 0;
-  opacity: 0.95;
+.signup-left .sedan-roof {
+  position: absolute;
+  bottom: 51px;
+  left: 36px;
+  width: 96px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px 8px 0 0;
 }
 
-.social-icons-bottom {
+.signup-left .sedan-window-front {
+  position: absolute;
+  bottom: 52px;
+  left: 108px;
+  width: 24px;
+  height: 22px;
+  background: rgba(108, 92, 231, 0.3);
+  border-radius: 6px 3px 0 0;
+  transform: skewX(-12deg);
+}
+
+.signup-left .sedan-window-rear {
+  position: absolute;
+  bottom: 52px;
+  left: 42px;
+  width: 20px;
+  height: 22px;
+  background: rgba(108, 92, 231, 0.3);
+  border-radius: 3px 6px 0 0;
+  transform: skewX(12deg);
+}
+
+.signup-left .sedan-headlight {
+  position: absolute;
+  bottom: 24px;
+  right: 4px;
+  width: 8px;
+  height: 6px;
+  background: #FFE066;
+  border-radius: 2px 4px 4px 2px;
+  box-shadow: 6px 0 18px rgba(255, 224, 102, 0.3);
+}
+
+.signup-left .sedan-taillight {
+  position: absolute;
+  bottom: 24px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  background: #ff6b81;
+  border-radius: 3px 2px 2px 3px;
+  box-shadow: -3px 0 10px rgba(255, 107, 129, 0.25);
+}
+
+.signup-left .sedan-wheel {
+  position: absolute;
+  bottom: 4px;
+  width: 24px;
+  height: 24px;
+  background: #2d3436;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+.signup-left .sedan-wheel::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+.signup-left .sedan-wh-f { right: 16px; }
+.signup-left .sedan-wh-r { left: 16px; }
+
+.signup-left .sedan-shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 14%;
+  width: 72%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  filter: blur(3px);
+}
+
+/* --- Feature Highlights --- */
+.signup-left .features {
   display: flex;
-  gap: 20px;
+  gap: 36px;
+  margin-top: 24px;
+  z-index: 10;
+  position: relative;
+  opacity: 0;
+  animation: s-fadeUp 0.7s 1.1s ease forwards;
 }
 
-.social-icon-link {
-  color: white;
-  transition: opacity 0.3s;
+.signup-left .feature {
+  text-align: center;
 }
 
-.social-icon-link:hover {
-  opacity: 0.7;
+.signup-left .feature-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.signup-left .feature-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255, 255, 255, 0.7);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.signup-left .feature-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* === KEYFRAMES === */
+@keyframes s-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}
+@keyframes s-fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes s-cloud {
+  0%   { transform: translateX(800px); }
+  100% { transform: translateX(-200px); }
+}
+@keyframes s-mtn {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-1800px); }
+}
+@keyframes s-hill {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-1500px); }
+}
+@keyframes s-pine {
+  0%   { transform: translateX(800px); }
+  100% { transform: translateX(-100px); }
+}
+@keyframes s-road {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-60px); }
+}
+@keyframes s-bounce {
+  0%   { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-2px); }
+}
+
+
+/* ========================
+   RIGHT PANEL — Form Side
+   ======================== */
+.signup-right {
+  flex: 1;
+  background: #f8f9fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
 }
 
 .signup-card {
   width: 100%;
-  max-width: 450px;
-  background: transparent;
-  padding: 50px 40px;
-  border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5px);
-  margin: 20px;
+  max-width: 400px;
+  background: #fff;
+  padding: 44px 40px;
+  border-radius: 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(108, 92, 231, 0.06),
+    0 20px 60px rgba(0, 0, 0, 0.04);
 }
 
 .signup-header {
-  text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
-.brand-title {
-  font-size: 42px;
-  font-weight: 700;
-  font-style: italic;
-  color: #ffffff;
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.signup-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
 }
 
-.social-buttons {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.social-btn {
-  width: 50px;
-  height: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  color: #ffffff;
-}
-
-.social-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-3px);
-}
-
-.divider-text {
-  text-align: center;
+.signup-header p {
+  font-size: 15px;
   color: #888;
-  font-size: 13px;
-  margin-bottom: 25px;
+  margin: 0;
+  font-weight: 400;
 }
 
+/* Form */
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
-.form-group input {
-  padding: 14px 18px;
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e8e8ee;
+  border-radius: 14px;
+  padding: 0 18px;
+  transition: all 0.25s ease;
+  background: #fafafa;
+}
+
+.input-wrapper:focus-within {
+  border-color: #6C5CE7;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.08);
+}
+
+.input-wrapper.error {
+  border-color: #ff4757;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.08);
+}
+
+.input-icon {
+  color: #b0b0c0;
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+  transition: color 0.25s;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: #6C5CE7;
+}
+
+.input-wrapper input {
+  flex: 1;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: all 0.2s ease;
   outline: none;
-  background: #0d0d0d;
-  color: #ffffff;
+  padding: 13px 0;
+  font-size: 14px;
+  color: #333;
+  background: transparent;
+  font-weight: 450;
 }
 
-.form-group input::placeholder {
-  color: #666;
+.input-wrapper input::placeholder {
+  color: #b0b0c0;
+  font-weight: 400;
 }
 
-.form-group input:focus {
-  background: #000;
-}
-
-.form-group input.error {
-  border-color: #f44336;
-}
-
-.password-group {
-  position: relative;
-}
-
-.password-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.password-wrapper input {
-  padding-right: 45px;
-  width: 100%;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+.password-toggle-btn {
   background: none;
   border: none;
   cursor: pointer;
-  color: #757575;
-  padding: 4px;
+  color: #b0b0c0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 4px;
   transition: color 0.2s;
 }
 
-.toggle-password:hover {
-  color: #ffd700;
+.password-toggle-btn:hover {
+  color: #6C5CE7;
 }
 
 .error-message {
-  color: #f44336;
-  font-size: 13px;
-  margin-top: -4px;
+  color: #ff4757;
+  font-size: 12px;
+  margin-left: 18px;
+  font-weight: 500;
 }
 
+/* Submit button */
 .submit-button {
-  background: #17a2b8;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, #6C5CE7, #7C6FF0);
   color: white;
   border: none;
-  border-radius: 25px;
-  padding: 14px;
+  border-radius: 14px;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 8px;
-  text-transform: uppercase;
+  margin-top: 6px;
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #138496;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .submit-button:disabled {
@@ -251,110 +656,85 @@
   cursor: not-allowed;
 }
 
+/* Login prompt */
 .login-prompt {
   text-align: center;
-  margin-top: 20px;
-  font-size: 13px;
-  color: #888;
+  margin-top: 24px;
+  font-size: 14px;
+  color: #999;
+  font-weight: 400;
 }
 
 .login-link {
-  color: #17a2b8;
+  color: #6C5CE7;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s;
 }
 
 .login-link:hover {
   text-decoration: underline;
-  color: #138496;
+  color: #5B4BC9;
 }
 
-.presented-by {
-  position: absolute;
-  bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #666;
-  background: white;
-  padding: 8px 20px;
-  border-radius: 20px;
-}
 
-.brand-mark {
-  font-weight: 700;
-  font-size: 16px;
-  color: #000;
-}
-
-/* Responsive design */
+/* ========================
+   RESPONSIVE
+   ======================== */
 @media (max-width: 968px) {
   .signup-container {
     flex-direction: column;
   }
 
   .signup-left {
-    min-height: 300px;
+    min-height: 400px;
   }
 
-  .illustration-content {
-    height: 250px;
+  .signup-left .brand-content {
+    padding-top: 6vh;
   }
 
-  .browser-mockup {
-    width: 180px;
-    height: 130px;
+  .signup-left .anim-title {
+    font-size: 38px;
   }
 
-  .person-head {
-    width: 60px;
-    height: 60px;
+  .signup-left .features {
+    gap: 20px;
   }
 
-  .person-body {
-    width: 70px;
-    height: 90px;
-  }
-right {
-    flex: 1;
-    order: 1;
+  .signup-right {
+    padding: 30px 20px;
   }
 
-  .signup-left {
-    min-height: 300px;
-    padding: 40px 20px;
-    order: 2;
-  }
-
-  .brand-logo {
-    margin-bottom: 60px;
-    font-size: 28px;
-  }
-
-  .hero-content {
-    margin-bottom: 80px;
-  }
-
-  .hero-title {
-    font-size: 36px;
-  }
-
-  .hero-subtitle {
-    font-size: 16px;
+  .signup-card {
+    padding: 36px 28px;
+    border-radius: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .signup-card {
-    padding: 20px 10px;
+  .signup-left {
+    min-height: 320px;
   }
 
-  .brand-title {
+  .signup-left .brand-content {
+    padding-top: 4vh;
+  }
+
+  .signup-left .anim-title {
     font-size: 32px;
   }
 
-  .hero-title {
-    font-size: 28px;
+  .signup-left .features {
+    display: none;
+  }
+
+  .signup-card {
+    padding: 28px 20px;
+  }
+
+  .signup-header h1 {
+    font-size: 24px;
   }
 }
+

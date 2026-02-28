@@ -42,7 +42,7 @@ const VehicleScreen = ({ onNavigate, onViewDetails }: VehicleScreenProps) => {
 
   const vehicles = [
     { id: 1, name: 'Mercedes', type: 'Sedan', price: 25, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
-    { id: 2, name: 'Mercedes', type: 'Sport', price: 50, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
+    { id: 2, name: 'Honda city', type: 'Sport', price: 50, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
     { id: 3, name: 'Mercedes', type: 'Sedan', price: 45, image: inovaCar, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 5 },
     { id: 4, name: 'Porsche', type: 'SUV', price: 40, image: car22, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
     { id: 5, name: 'Toyota', type: 'Sedan', price: 35, image: honda, features: ['Automat', 'PB 95', 'Air Conditioner'], seats: 7 },
