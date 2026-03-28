@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react';
+import { authAPI } from './api';
 import './Signup.css';
 
 interface FormData {
@@ -17,9 +18,10 @@ interface FormErrors {
 
 interface SignupProps {
   onSwitchToLogin?: () => void;
+  onOtpRequired?: (email: string, purpose: 'signup', otp?: string) => void;
 }
 
-const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
+const Signup: React.FC<SignupProps> = ({ onSwitchToLogin, onOtpRequired }) => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
@@ -28,9 +30,12 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [apiError, setApiError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [btnAnimating, setBtnAnimating] = useState(false);
+  const [btnDone, setBtnDone] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -74,6 +79,7 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
       ...prev,
       [name]: value,
     }));
+    setApiError('');
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
@@ -91,21 +97,26 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
     }
 
     setIsSubmitting(true);
+    setBtnAnimating(true);
+    setBtnDone(false);
+    setApiError('');
 
     try {
-      // Simulate API call
-      console.log('Signup submitted:', formData);
-      // Replace with actual API call:
-      // await signupAPI(formData);
-      
-      // Simulate delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      alert('Account created successfully!');
-      // Navigate to dashboard or login page
-    } catch (error) {
-      console.error('Signup failed:', error);
-      alert('Signup failed. Please try again.');
+      const data = await authAPI.signup(formData.fullName, formData.email, formData.password);
+
+      setBtnDone(true);
+
+      // Wait for checkmark animation then navigate to OTP
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      if (onOtpRequired) {
+        onOtpRequired(formData.email, 'signup', (data as any).otp);
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Signup failed. Please try again.';
+      setApiError(message);
+      setBtnAnimating(false);
+      setBtnDone(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -146,23 +157,23 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
             <span className="anim-title-space">&nbsp;</span>
             <span>R</span><span>i</span><span>d</span><span>e</span>
           </h1>
-          <p className="brand-tagline">Create your account and start your<br/>premium road trip today.</p>
+          <p className="brand-tagline">Create your account and start your<br />premium road trip today.</p>
           <div className="features">
             <div className="feature">
               <div className="feature-icon">
-                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               </div>
               <div className="feature-text">Secure</div>
             </div>
             <div className="feature">
               <div className="feature-icon">
-                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
               </div>
               <div className="feature-text">24/7 Support</div>
             </div>
             <div className="feature">
               <div className="feature-icon">
-                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
               </div>
               <div className="feature-text">Verified</div>
             </div>
@@ -183,8 +194,8 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               <div className={`input-wrapper ${errors.fullName ? 'error' : ''}`}>
                 <span className="input-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
                   </svg>
                 </span>
                 <input
@@ -204,8 +215,8 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               <div className={`input-wrapper ${errors.email ? 'error' : ''}`}>
                 <span className="input-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M22 4L12 13L2 4"/>
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M22 4L12 13L2 4" />
                   </svg>
                 </span>
                 <input
@@ -225,8 +236,8 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               <div className={`input-wrapper ${errors.password ? 'error' : ''}`}>
                 <span className="input-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2"/>
-                    <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
                   </svg>
                 </span>
                 <input
@@ -263,8 +274,8 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               <div className={`input-wrapper ${errors.confirmPassword ? 'error' : ''}`}>
                 <span className="input-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2"/>
-                    <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
                   </svg>
                 </span>
                 <input
@@ -297,12 +308,28 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
               {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
             </div>
 
+            {apiError && (
+              <div className="api-error-message">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
+                {apiError}
+              </div>
+            )}
+
             <button
               type="submit"
-              className="submit-button"
+              className={`submit-button noselect${btnAnimating ? ' animating' : ''}${btnDone ? ' done' : ''}`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+              <span className="submit-label">{isSubmitting && !btnDone ? '' : 'Sign Up'}</span>
+              <svg
+                className="submit-check"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M0 11c2.761.575 6.312 1.688 9 3.438 3.157-4.23 8.828-8.187 15-11.438-5.861 5.775-10.711 12.328-14 18.917-2.651-3.766-5.547-7.271-10-10.917z" />
+              </svg>
             </button>
           </form>
 

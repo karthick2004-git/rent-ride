@@ -825,3 +825,23 @@
     font-size: 24px;
   }
 }
+
+/* API Error Message */
+.api-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ff4757;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 71, 87, 0.06);
+  border: 1px solid rgba(255, 71, 87, 0.12);
+  animation: fadeInError 0.3s ease;
+}
+
+@keyframes fadeInError {
+  0% { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

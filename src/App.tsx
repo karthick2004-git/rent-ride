@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './Home';
 import VehicleScreen from './vehicle/vehicle-screen';
@@ -7,6 +7,7 @@ import About from './About/About';
 import Contact from './contact/Contact';
 import Login from './Login';
 import Signup from './Signup';
+import OtpVerification from './OtpVerification';
 import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
@@ -21,16 +22,53 @@ export interface Vehicle {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Check for existing token on load
+  const [currentPage, setCurrentPage] = useState(() => {
+    const token = localStorage.getItem('rent_ride_token');
+    return token ? 'home' : 'login';
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem('rent_ride_token');
+  });
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
-  const handleLoginSuccess = () => {
+  // OTP flow state
+  const [otpEmail, setOtpEmail] = useState('');
+  const [otpPurpose, setOtpPurpose] = useState<'signup' | 'login'>('login');
+  const [devOtp, setDevOtp] = useState<string | undefined>(undefined);
+
+  // Sync login state with localStorage
+  useEffect(() => {
+    const token = localStorage.getItem('rent_ride_token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleOtpRequired = (email: string, purpose: 'signup' | 'login', otp?: string) => {
+    setOtpEmail(email);
+    setOtpPurpose(purpose);
+    setDevOtp(otp);
+    setCurrentPage('otp');
+  };
+
+  const handleOtpVerified = (token: string, user: { id: number; name: string; email: string }) => {
+    localStorage.setItem('rent_ride_token', token);
+    localStorage.setItem('rent_ride_user', JSON.stringify(user));
+    setIsLoggedIn(true);
+    setCurrentPage('home');
+  };
+
+  const handleLoginSuccess = (token: string, user: { id: number; name: string; email: string }) => {
+    localStorage.setItem('rent_ride_token', token);
+    localStorage.setItem('rent_ride_user', JSON.stringify(user));
     setIsLoggedIn(true);
     setCurrentPage('home');
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('rent_ride_token');
+    localStorage.removeItem('rent_ride_user');
     setIsLoggedIn(false);
     setCurrentPage('login');
   };
@@ -42,7 +80,7 @@ function App() {
 
   return (
     <div className="App">
-      {currentPage !== 'login' && currentPage !== 'signup' && (
+      {currentPage !== 'login' && currentPage !== 'signup' && currentPage !== 'otp' && (
         <Navbar 
           onNavigate={setCurrentPage} 
           activePage={currentPage}
@@ -57,7 +95,19 @@ function App() {
         />
       )}
       {currentPage === 'signup' && (
-        <Signup onSwitchToLogin={() => setCurrentPage('login')} />
+        <Signup 
+          onSwitchToLogin={() => setCurrentPage('login')}
+          onOtpRequired={handleOtpRequired}
+        />
+      )}
+      {currentPage === 'otp' && (
+        <OtpVerification
+          email={otpEmail}
+          purpose={otpPurpose}
+          devOtp={devOtp}
+          onVerified={handleOtpVerified}
+          onBack={() => setCurrentPage(otpPurpose === 'signup' ? 'signup' : 'login')}
+        />
       )}
       {currentPage === 'home' && <Home onNavigate={setCurrentPage} onViewDetails={handleViewDetails} />}
       {currentPage === 'vehicles' && <VehicleScreen onNavigate={setCurrentPage} onViewDetails={handleViewDetails} />}

@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react';
+import { authAPI } from './api';
 import './Login.css';
 
 interface FormData {
@@ -13,7 +14,7 @@ interface FormErrors {
 
 interface LoginProps {
   onSwitchToSignup?: () => void;
-  onLoginSuccess?: () => void;
+  onLoginSuccess?: (token: string, user: { id: number; name: string; email: string }) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
@@ -23,6 +24,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [apiError, setApiError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [btnAnimating, setBtnAnimating] = useState(false);
@@ -58,6 +60,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
       ...prev,
       [name]: value,
     }));
+    setApiError('');
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
@@ -77,25 +80,24 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
     setIsSubmitting(true);
     setBtnAnimating(true);
     setBtnDone(false);
+    setApiError('');
 
     try {
-      // Simulate API call
-      console.log('Login submitted:', formData);
-      // Replace with actual API call:
-      // await loginAPI(formData.email, formData.password);
-      
-      // Wait for spin animation (2.5s) then show checkmark
-      await new Promise(resolve => setTimeout(resolve, 2500));
+      const data = await authAPI.login(formData.email, formData.password);
+
       setBtnDone(true);
-      
-      // Wait for checkmark to show, then navigate
+
+      // Wait for checkmark animation then navigate to home
       await new Promise(resolve => setTimeout(resolve, 800));
-      onLoginSuccess?.();
-    } catch (error) {
-      console.error('Login failed:', error);
+
+      if (data.token && data.user) {
+        onLoginSuccess?.(data.token, data.user);
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Login failed. Please try again.';
+      setApiError(message);
       setBtnAnimating(false);
       setBtnDone(false);
-      alert('Login failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -227,6 +229,13 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
               </div>
               {errors.password && <span className="error-message">{errors.password}</span>}
             </div>
+
+            {apiError && (
+              <div className="api-error-message">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                {apiError}
+              </div>
+            )}
 
             <div className="forgot-link">
               <a href="#" className="forgot-password">Forgot Password?</a>

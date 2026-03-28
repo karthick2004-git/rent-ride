@@ -625,35 +625,123 @@
 }
 
 /* Submit button */
-.submit-button {
+.signup-form .submit-button {
+  position: relative;
   width: 100%;
   height: 50px;
   background: linear-gradient(135deg, #6C5CE7, #7C6FF0);
   color: white;
   border: none;
   border-radius: 14px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms ease;
   margin-top: 6px;
+  overflow: hidden;
   box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
-.submit-button:hover:not(:disabled) {
+.signup-form .submit-button:hover:not(:disabled):not(.animating) {
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
 }
 
-.submit-button:active:not(:disabled) {
+.signup-form .submit-button:active:not(:disabled):not(.animating) {
   transform: translateY(0);
 }
 
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.signup-form .submit-button .submit-label,
+.signup-form .submit-button .submit-check {
+  position: absolute;
+  transition: opacity 200ms;
+}
+
+.signup-form .submit-button .submit-label {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  font-size: 14px;
+  user-select: none;
+}
+
+.signup-form .submit-button .submit-check {
+  fill: transparent;
+  opacity: 0;
+}
+
+.signup-form .submit-button.animating {
+  width: 50px;
+  border-radius: 50%;
+  border: 3px solid #e8e8ee;
+  border-left: 3px solid #6C5CE7;
+  animation: s-btn-spin 2s 300ms forwards;
+  cursor: default;
+  background: transparent;
+  box-shadow: none;
+}
+
+.signup-form .submit-button.animating .submit-label {
+  opacity: 0;
+}
+
+.signup-form .submit-button.done {
+  animation: s-btn-circle 300ms forwards;
+  border: 3px solid #17b978;
+  border-radius: 50%;
+  width: 50px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.signup-form .submit-button.done .submit-check {
+  opacity: 1;
+  animation: s-btn-check 500ms forwards;
+}
+
+.signup-form .submit-button:disabled {
+  cursor: default;
+}
+
+@keyframes s-btn-spin {
+  80% {
+    border: 3px solid #e8e8ee;
+    border-left: 3px solid #6C5CE7;
+  }
+  100% {
+    transform: rotate(1080deg);
+    border: 3px solid #17b978;
+  }
+}
+
+@keyframes s-btn-check {
+  to { fill: #17b978; }
+}
+
+@keyframes s-btn-circle {
+  to { border: 3px solid #17b978; }
+}
+
+/* API Error Message */
+.signup-form .api-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ff4757;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 71, 87, 0.06);
+  border: 1px solid rgba(255, 71, 87, 0.12);
+  animation: s-fadeError 0.3s ease;
+}
+
+@keyframes s-fadeError {
+  0% { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Login prompt */
